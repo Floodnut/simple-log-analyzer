@@ -97,12 +97,3 @@ else
         analysis
     fi
 fi
-
-# suspicious
-# 181.192.18.43 - - [10/Dec/2022:14:59:29 +0900] "GET / HTTP/1.1" 404 564 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-# 2012-04-27 15:14:10 W3SVC1 www.victim.com HEAD /iisstart.htm - 80 - 115.238.110.120 - 200 0 64
-# /remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession
-
-# awk -F " " '{sub("\"", "", $6); print $1, $6}' access.log.1 | uniq | wc -l
-# grep -h  ^((?!\"GET).)*$ access.log.1 > ./log/$DATE/$file.NONE-GET.log
-# grep -hv '"GET' access.log.1 
