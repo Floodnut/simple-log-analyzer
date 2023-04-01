@@ -24,7 +24,7 @@ analysis(){
     echo ""
     echo "$file analysis."
     DATE=$(date "+%Y.%m.%d_%H-%M-%S")
-
+    BASEFILE=$(basename $file)
     SHA1=$(sha1sum $file)
     MD5=$(md5sum $file)
 
@@ -51,13 +51,13 @@ analysis(){
     OTHERS_COUNT=$(($TOTAL_COUNT-$GET_COUNT-$POST_COUNT-$PUT_COUNT-$DELETE_COUNT-$OPTION_COUNT))
 
     echo "$date [Info] Parse GET request." > .log
-    grep -h 'GET' $file > ./log/$DATE/$file.GET.log
+    grep -h 'GET' $file > ./log/$DATE/$BASEFILE.GET.log
 
     echo "$date [Info] Parse none-GET request." > .log
-    grep -hv 'GET' $file > ./log/$DATE/$file.NONE-GET.log
+    grep -hv 'GET' $file > ./log/$DATE/$BASEFILE.NONE-GET.log
 
     echo "$date [Info] Parse suspicious request." > .log
-    grep '(\\x)[0-9a-zZ-Z]|..' $file > ./log/$DATE/$file.suspicious.log
+    grep '(\\x)[0-9a-zZ-Z]|..' $file > ./log/$DATE/$BASEFILE.suspicious.log
 
     echo ""
     echo "------------------result------------------"
@@ -97,12 +97,4 @@ else
         analysis
     fi
 fi
-
-# suspicious
-# 181.192.18.43 - - [10/Dec/2022:14:59:29 +0900] "GET / HTTP/1.1" 404 564 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-# 2012-04-27 15:14:10 W3SVC1 www.victim.com HEAD /iisstart.htm - 80 - 115.238.110.120 - 200 0 64
-# /remote/fgt_lang?lang=/../../../..//////////dev/cmdb/sslvpn_websession
-
-# awk -F " " '{sub("\"", "", $6); print $1, $6}' access.log.1 | uniq | wc -l
-# grep -h  ^((?!\"GET).)*$ access.log.1 > ./log/$DATE/$file.NONE-GET.log
-# grep -hv '"GET' access.log.1 
+ 
