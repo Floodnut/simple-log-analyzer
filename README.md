@@ -1,5 +1,5 @@
 <div align="center">
-<h2> Simple Log Viewer </h2>
+<h2> Simple Log Analyzer </h2>
 </div>
 
 <h3> Usage </h3>
